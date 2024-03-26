@@ -45,11 +45,20 @@
         name: openssl
         state: restarted
 
-
-- hosts: localhost
+- hosts: Server1
   become: yes
   tasks:
-    - name: Copy Certificate from Control Node to Manage Node
-      copy:
+    - name: Copy Generated Certificate from Control Node to Workstation
+      fetch:
+        src: "/etc/ssl/certs/ca.crt"
+        dest: "/home/janssenvalencia/HOA9.1/certificates/ca.crt"
+        flat: yes
+
+- hosts: Server1
+  become: yes
+  tasks:
+    - name: Copy All Certifiacte from Control Node To Manage Node
+      fetch:
         src: /etc/ssl/certs/ca-certificates.crt
-        dest: /home/janssenvalencia/HOA9.1/certificate
+        dest: /home/janssenvalencia/HOA9.1/allCertificate
+        flat: yes
